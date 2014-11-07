@@ -77,7 +77,7 @@ classdef bndfun < classicfun
                 pref = chebfunpref(pref);
             end
 
-            data = parseDataInputs(data, pref);
+            data = bndfun.parseDataInputs(data, pref);
 
             % Check the domain input.
             if ( ~all(size(data.domain) == [1, 2]) || (diff(data.domain) <= 0) )
@@ -120,12 +120,19 @@ classdef bndfun < classicfun
         f = make(varargin);
         
     end
-    
-end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% METHODS IMPLEMENTED IN THIS FILE:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% PRIVATE STATIC METHODS:
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    methods ( Access = private, Static = true )
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Class-related functions: private utilities for this m-file.
+%% Note: temporarily (?) made private static methods for Octave
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 function data = parseDataInputs(data, pref)
 %PARSEDATAINPUTS   Parse inputs from the DATA structure and assign defaults.
@@ -139,4 +146,7 @@ if ( ~isfield(data, 'hscale') || isempty(data.hscale) )
     data.hscale = norm(data.domain, inf);
 end
 
+end
+
+    end  % methods
 end
