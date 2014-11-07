@@ -200,7 +200,7 @@ classdef chebfun
             end
                        
             % Parse inputs:
-            [op, dom, data, pref, flags] = parseInputs(varargin{:});
+            [op, dom, data, pref, flags] = chebfun.parseInputs(varargin{:});
                         
             if ( flags.done )
                 % An update was performed. Exit gracefully:
@@ -436,14 +436,14 @@ classdef chebfun
         % Parse inputs to PLOT. Extract 'lineWidth', etc.
         [lineStyle, pointStyle, jumpStyle, deltaStyle, out] = ...
             parsePlotStyle(varargin)
-    end
 
-end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Class-related functions: private utilities for this m-file.
+%% Note: temporarily (?) made private static methods for Octave
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function op = str2op(op)
     % Convert string inputs to either numeric format or function_handles.
     sop = str2num(op); %#ok<ST2NM> % STR2DOUBLE doesn't support str2double('pi')
@@ -773,10 +773,10 @@ function [op, dom, data, pref, flags] = parseInputs(op, varargin)
     function op = parseOp(op)
         % Convert string input to function_handle:
         if ( ischar(op) )
-            op = str2op(op);
+            op = chebfun.str2op(op);
         end
         if ( doVectorCheck && isa(op, 'function_handle') )
-            op = vectorCheck(op, dom, vectorize);
+            op = chebfun.vectorCheck(op, dom, vectorize);
         end
         if ( isa(op, 'chebfun') )
             if ( op.isTransposed )
@@ -938,7 +938,6 @@ catch ME
     
 end
 
-end
 
 function g = vec(op, y)
 %VEC  Vectorize a function or string expression.
@@ -977,4 +976,11 @@ function g = vec(op, y)
         end
     end
 
+end
+
+end
+
+
+
+    end  % methods
 end
