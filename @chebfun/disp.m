@@ -79,9 +79,10 @@ end
 s = [s, sprintf('\n       interval       length     endpoint values %s\n', extraItem)];
 len = zeros(numFuns, 1);
 for j = 1:numFuns
-    len(j) = length(f.funs{j});
+    ffuns = f.funs;
+    len(j) = length(ffuns{j});
 
-    if ( ~isreal(f.funs{j}) )
+    if ( ~isreal(ffuns{j}) )
         % For complex-valued funs, we don't display the values.
 
         % Print information to screen:
@@ -91,7 +92,7 @@ for j = 1:numFuns
     else
 
         % Grab values at endpoints:
-        endvals = [get(f.funs{j}, 'lval'), get(f.funs{j}, 'rval')];
+        endvals = [get(ffuns{j}, 'lval'), get(ffuns{j}, 'rval')];
 
         % Tweak the endpoint values: (This prevents -0 and +0)
         if ( ~any(isnan(endvals)) )
