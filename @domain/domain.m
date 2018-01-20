@@ -1,4 +1,4 @@
-classdef (InferiorClasses = {?chebfun}) domain < double
+classdef (InferiorClasses = {?chebfun}) domain
 %DOMAIN   Utility class for CHEBFUN. Mostly for backward compatibility.
 
 % Copyright 2017 by The University of Oxford and The Chebfun Developers.
@@ -17,7 +17,7 @@ classdef (InferiorClasses = {?chebfun}) domain < double
     %% CLASS PROPERTIES:
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties ( Access = public )
-        
+        data
     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,6 +28,11 @@ classdef (InferiorClasses = {?chebfun}) domain < double
         function obj = domain(varargin)
             %Constructor for the DOMIAN class.
             
+            if ((nargin == 1) && isa (varargin{1}, 'domain'))
+                obj = varargin{1};
+                return
+            end
+
             % Return an empty DOMAIN on null input:
             if ( nargin == 0 )
                 data = [];
@@ -36,7 +41,8 @@ classdef (InferiorClasses = {?chebfun}) domain < double
             end
             
             % Create the domain:
-            obj = obj@double(data);
+            %obj = obj@double(data);
+            obj.data = data;
             
         end
         
@@ -47,7 +53,8 @@ classdef (InferiorClasses = {?chebfun}) domain < double
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     methods ( Access = public, Static = false )
         
-        function out = validate(dom)
+        function out = validate(x)
+            dom = x.data;
             out = true;
             if ( ~isnumeric(dom) || any(isnan(dom)) )
                 out = false;
@@ -65,12 +72,56 @@ classdef (InferiorClasses = {?chebfun}) domain < double
         end
         
         function display(dom)
-            disp(double(dom))
+            disp(dom.data)
         end
-        
+
         function out = subsref(d, s)
-            out = subsref@double(d, s);
-            out = double(out);
+            % broken on Octave:
+            %out = subsref@double(d, s);
+            %out = double(out(s));
+            switch s.type
+                case '()'
+                    assert (length(s.subs) == 1)
+                    out = d.data(s.subs{1});
+                otherwise
+                    s
+                    error('not implemented')
+            end
+        end
+
+        function out = numel(d)
+            out = numel(d.data);
+        end
+
+        function [n,m] = size(d)
+            if (nargout == 0 || nargout == 1)
+                n = size(d.data);
+            elseif (nargout == 2)
+                [n, m] = size(d.data);
+            else
+                error('not implemented');
+            end
+        end
+
+        function out = transpose(d)
+            out = domain(d.data.');
+        end
+
+        function out = double(d)
+            out = d.data;
+        end
+
+        function out = feval(s, dom)
+            out = feval(s, dom.data);
+        end
+
+        function [varargout] = setdiff(varargin)
+            for i=1:nargin
+                varargin{i} = double(varargin{i});
+            end
+            [varargout{1:nargout}] = setdiff(varargin{:});
+            % TODO?
+            varargout{1} = domain(varargout{1});
         end
         
         function varargout = sprintf(varargin)
