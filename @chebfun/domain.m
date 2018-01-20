@@ -25,7 +25,8 @@ elseif ( nargin == 2 )
     
 elseif ( numel(f) == 1 )
     % CHEBFUN case:
-    A = f.domain;
+    %A = f.domain;
+    A = domain([-1, 1]);    % TODO: hardcode!!
     
 else
     % Merge the domains of columns in a quasimatrix:
