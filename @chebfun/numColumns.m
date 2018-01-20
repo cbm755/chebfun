@@ -13,7 +13,8 @@ if ( isempty(f) )
     out = 0;
 elseif ( numel(f) == 1 )
     % Possible array-valued:
-    out = size(f.funs{1}, 2);
+    temp = f.funs;
+    out = size(temp{1}, 2);
 else
     % A quasimatrix:
     out = numel(f);
