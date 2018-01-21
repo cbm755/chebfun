@@ -1,0 +1,42 @@
+Relevant Octave bugs
+--------------------
+
+https://savannah.gnu.org/bugs/?44035
+
+https://savannah.gnu.org/bugs/?51285
+
+Probably others!
+
+
+- - - - - - - - - - - - - - - -
+
+Older notes
+-----------
+
+Issue: class-related functions not same as private static methods
+
+http://www.mathworks.co.uk/help/matlab/matlab_oop/specifying-methods-and-functions.html?refresh=true#br2la89
+
+private static methods should use dot notation
+
+My interpretation of the Matlab docs if that calling a static method
+should require the class name (or instance) and dot notation
+("myclass.mystaticmethod()").
+
+Citations:
+
+[http://www.mathworks.co.uk/help/matlab/matlab_oop/static-methods.html]
+
+> % Calling a static method requires the class name
+
+[http://www.mathworks.co.uk/help/matlab/matlab_oop/developing-classes--typical-workflow.html]
+
+Matlab seems to allow you to be sloppy in this way inside your own class
+(or at least I can't find it documented anywhere that you are allowed to do this.)
+
+
+If really you want to use functions without the dot, there is another
+feature: "class-related function" which are also private to the m-file
+(and not e.g., methods of the class defined in other m-files).
+
+
