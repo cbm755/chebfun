@@ -8,7 +8,7 @@ function out = isempty(f)
 
 % If there is a .fun and f.funs(1) is not empty the f is not empty.
 temp = f.funs;
-if ( numel(f) > 1 || ( (numel(f.funs) > 0) && ~isempty(temp{1}) ) )
+if ( numel(f) > 1 || ( (numel(temp) > 0) && ~isempty(temp{1}) ) )
     out = false;
 else
     out = true;
