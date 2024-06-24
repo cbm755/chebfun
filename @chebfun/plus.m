@@ -33,9 +33,11 @@ elseif ( isnumeric(g) )     % CHEBFUN + double
         end
         
         % Add g to the FUNs:
+	temp = f.funs
         for k = 1:numel(f.funs)
-            f.funs{k} = f.funs{k} + g;
+            f.funs{k} = temp{k} + g;
         end
+	% todo: reassign?
         % Add g to the pointValues:
         if ( (size(f.pointValues, 2) == 1) &&  (numColumns(f) > 1) )
             f.pointValues = repmat(f.pointValues, 1, size(g, 2)); % Allow expansion in f.

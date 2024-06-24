@@ -13,6 +13,7 @@ if ( ~isa(f, 'chebfun') )      % ??? * CHEBFUN
 
     % Ensure CHEBFUN is the first input:
     if ( ~g(1).isTransposed )
+        disp('swap')
         f = times(g, f);
     else
         f = times(g.', f.').';
@@ -35,14 +36,27 @@ elseif ( isnumeric(g) )        % CHEBFUN * double
 
         % Loop over the funs:
         for k = 1:numel(f.funs)
-            f.funs{k} = times(f.funs{k}, g);
+            temp = f.funs
+	    class(temp)
+	    res = times(temp{k}, g)
+	    temp2 = f.funs
+	    temp2{k} = res  # does this change the original f.funs?
         end
 
         % Multiply the pointValues:
         if ( numel(g) > 1 )
             f.pointValues = bsxfun(@times, f.pointValues, g);
         else
-            f.pointValues = f.pointValues .* g;
+	    disp('got here')
+	    g
+	    class(g)
+	    temp = f.pointValues
+	    class(temp)
+	    rhs = temp .* g;
+	    # in matlab the following works: but is it legal?
+            f.pointValues = rhs;  # assignment to the properties of f
+	    # maybe we want to replace with:
+            # set_private_point_values(f, rhs)
         end
     
     else

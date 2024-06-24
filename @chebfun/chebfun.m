@@ -153,9 +153,11 @@ classdef chebfun
         % (F.DOMAIN(k), F.DOMAIN(k+1)). If M = size(f.funs, 2) is greater than
         % 1, then the CHEBFUN object is referred to as "array valued".
         funs                % (Kx1 cell array of FUN objects)
-        
+
+	% CBM: TODO: do we need to make these private and use setter/getter?
         % POINTVALUES Values of the function at the break points.
         pointValues = [];      % (1 x (K+1) double)
+
 
         % ISTRANSPOSED determines whether a (possibly array-valued) CHEBFUN F
         % should be interpreted as a collection of "column" CHEBFUN objects (if
