@@ -145,6 +145,12 @@ classdef chebfun
         % individual FUN objects comprising the CHEBFUN. The entries in this
         % vector should be strictly increasing.
         mydomain              % (1x(K+1) double)
+		
+		
+		% POINTVALUES Values of the function at the break points.
+        %pointValues = [];      % (1 x (K+1) double)
+		
+		
     end
     properties (Access = public)
         % FUNS is a cell array containing the FUN objects that comprise a
@@ -164,7 +170,7 @@ classdef chebfun
         % (Mxinf) arrays. This difference is only behavioral; the other
         % properties described above are _NOT_ stored differently if this flag
         % is set.)
-        isTransposed = 0;   % (logical)
+        isTransposed = 0;   % (logical) ---!!!class field---
     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -243,6 +249,41 @@ classdef chebfun
             end
 
         end
+		
+		
+		%{
+        # in case pointValues ​​is a private class field		
+        function set_private_point_values(f, array)
+			f.pointValues = array;		
+        end
+        
+
+        function f = set_private_point_values(f, varargin)
+
+          disp("set private property here!")
+          %approach 1!
+    
+          prop = varargin{1};
+          val = varargin{2};
+          while (numel (varargin) > 1)
+            prop = varargin{1};
+            val = varargin{2};
+            varargin(1:2) = [];
+    
+            f.pointValues = val(:); % force row vector
+          endwhile
+          disp("set result")
+          f.pointValues
+          disp("set result end")
+    
+        endfunction
+		
+		function res = get_private_point_values(f)
+            disp("get here!")
+			res = f.pointValues;		
+		end
+		
+        %}
         
     end
     

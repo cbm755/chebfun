@@ -25,6 +25,13 @@ function f = subsasgn(f, index, val)
 
 idx = index(1).subs;
 
+% debugging:
+disp("we're in @chebfun/subsasgn...")
+index
+idx
+val
+
+
 switch index(1).type
     case '.'
 

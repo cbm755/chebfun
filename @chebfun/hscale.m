@@ -7,7 +7,7 @@ function h = hscale(f)
 % See http://www.chebfun.org/ for Chebfun information.
 
 % Compute INF norm of the domain:
-h = norm(f(1).domain([1, end]), inf);
+h = norm(f(1).mydomain([1, end]), inf);
 
 % Unbounded domains are defined to have hscale = 1:
 if ( isinf(h) )

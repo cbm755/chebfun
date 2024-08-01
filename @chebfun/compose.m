@@ -221,6 +221,7 @@ else
     
     if ( numel(f) == 1 )
         % Array-valued CHEBFUN case:
+        %disp(op)
         f = columnCompose(f, op, g, pref, opIsBinary);
     else
         % QUASIMATRIX case:
@@ -239,30 +240,41 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function f = columnCompose(f, op, g, pref, opIsBinary)
+function f = columnCompose(obj, op, g, pref, opIsBinary)
+
+
 
 %% Initialise:
 
 % Initialise pointValues.
+f = chebfun();
+%disp("in columnCompose from compose.m!!!!!")
 
 if ( opIsBinary )
     % Call OVERLAP() if we are composing two CHEBFUN inputs with a binary op:
-    [f, g] = overlap(f, g);
-    pointValues = feval(op, f.pointValues, g.pointValues);
+    [f, g] = overlap(obj, g);
+    pointValues = feval(op, obj.pointValues, g.pointValues);
     newPointValues = pointValues(1,:);
 else
-    pointValues = feval(op, f.pointValues);
+    pointValues = feval(op, obj.pointValues);
     newPointValues = pointValues(1,:);
 end
 
 % Number of piecewise intervals in f:
-numInts = numel(f.domain) - 1;
+%disp(obj.mydomain)
+numInts = numel(obj.mydomain) - 1;
+%disp(numInts)
 
 % Initialise storage for the output FUN cell:
 newFuns = {};
 
-% Initialise new domain vector:
-newDom = f.domain(1);
+% Initialise new domain vector
+
+temp_dom = obj.mydomain;
+newDom = temp_dom(1);
+%newDom = get(f, "domain")(1); %%%% working 
+%newDom = f.mydomain(1); %%%%!!!!!! error: can't perform indexing operation on array of chebfun objects
+
 
 if ( pref.splitting) % Is splitting on?
     % Set the maximum length (i.e., number of sample points for CHEBTECH):
@@ -280,19 +292,22 @@ end
 % This line assumes that the compose method for f is the one that gets called
 % ultimately instead of the one for g (which is true currently but could
 % change).
-pref.tech = get(f.funs{1}, 'tech');
+temp_funs = obj.funs;
+pref.tech = get(temp_funs{1}, 'tech');
 
 % Suppress growing vector Mlint warnings (which are inevitable here):
 %#ok<*AGROW>
 
 %% Loop through each interval:
 for k = 1:numInts
+
+    %disp(k)
     
     % Attempt to generate FUN objects using FUN/COMPOSE().
     if ( isempty(g) )
-        newFun = compose(f.funs{k}, op, [], [], pref);
+        newFun = compose(temp_funs{k}, op, [], [], pref);
     else
-        newFun = compose(f.funs{k}, op, g.funs{k}, [], pref);
+        newFun = compose(temp_funs{k}, op, g.funs{k}, [], pref);
     end
     isHappy = get(newFun, 'ishappy');
 
@@ -314,7 +329,7 @@ for k = 1:numInts
         % Store new FUN in cell array:
         newFuns = [newFuns, {newFun}];                   
         % Store new ends:
-        newDom = [newDom, f.domain(k+1)];
+        newDom = [newDom, temp_dom(k+1)];
         % Store new pointValues: (Note, will only be a matrix - not a tensor)
         if ( isempty(g) )
             newPointValues = [newPointValues ; pointValues(k+1,:)];
@@ -325,7 +340,7 @@ for k = 1:numInts
     elseif ( pref.splitting )
 
         % If not happy and splitting is on, get a CHEBFUN for that subinterval:
-        domk = f.domain(k:k+1);
+        domk = temp_dom(k:k+1);
         if ( opIsBinary )
             newChebfun = chebfun(@(x) feval(op, feval(f, x), feval(g, x)), ...
                 domk, pref);
@@ -359,9 +374,11 @@ end
 %% Prepare output:
 
 % Put the FUN cell, domain, and pointValues back into a CHEBFUN:
-f.funs = newFuns;
-f.domain = newDom;
+
 f.pointValues = newPointValues;
+%f = set_private_point_values(f, "pointValues", newPointValues);
+f.funs = newFuns;
+f.mydomain = newDom;
 
 end
 

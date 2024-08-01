@@ -38,6 +38,7 @@ switch index(1).type
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FEVAL / COMPOSE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     case '()'
+        %disp('()');
         
         % Deal with row CHEBFUN objects:
         isTransposed = f(1).isTransposed;
@@ -144,6 +145,7 @@ switch index(1).type
     
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GET %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     case '.'
+        %disp('.');
 
         % Call GET() for .PROP access.
         out = get(f, idx);
@@ -155,6 +157,7 @@ switch index(1).type
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RESTRICT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     case '{}'
+        %disp('{}');
 
         if ( length(idx) == 1 )
             if ( isequal(idx{1}, ':') )

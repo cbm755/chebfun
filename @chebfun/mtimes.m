@@ -88,7 +88,7 @@ elseif ( fIsChebfun && isnumeric(g) )       % CHEBFUN * double
 
 elseif ( isnumeric(f) && gIsChebfun )       % double * CHEBFUN
 
-        f = mtimes(g.', f.').';
+        f = mtimes(g, f);
 
 elseif ( fIsChebfun )                       % CHEBFUN * ??? 
 

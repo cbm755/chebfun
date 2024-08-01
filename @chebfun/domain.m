@@ -11,14 +11,14 @@ function [A, B] = domain(f, flag)
 
 if ( nargout == 2 )
     % Return the end points as two scalars:
-    dom = f(1).domain([1 end]);
+    dom = f(1).mydomain([1 end]);
     A = dom(1);
     B = dom(2);
 
 elseif ( nargin == 2 )
     % Return the end points as a vector
     if ( strcmpi(flag, 'ends') )
-        A = f(1).domain([1 end]);
+        A = f(1).mydomain([1 end]);
     else
         error('CHEBFUN:CHEBFUN:domain:unknown', 'Unexpected input.');
     end
@@ -31,9 +31,11 @@ else
     % Merge the domains of columns in a quasimatrix:
     dom = cell(1, numel(f));
     for k = 1:numel(f)
-        dom{k} = f(k).domain;
+        dom{k} = f(k).mydomain;
     end
-    A = domain.merge(dom{:});
+    A = mydomain.merge(dom{:});
 end
 
 end
+
+
