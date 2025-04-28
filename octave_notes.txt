@@ -39,4 +39,13 @@ If really you want to use functions without the dot, there is another
 feature: "class-related function" which are also private to the m-file
 (and not e.g., methods of the class defined in other m-files).
 
+Newer notes
+-----------
+
+Comments on existing commits:
+- [octave: temporary workaround for f.funs{j}] not quite sure what the error is here, chaining subsref seems to work when I create toy examples
+- [silence warning by reordering switch]: no longer produces a warning when fieldnames is called on a classdef
+- [TEMPORARY: remove the domain class and replace with domain.m] domain class is deprecated, may not need to implement; still, fixing the subclassing of built-in types might be a good idea
+- [octave: use static methods instead of class-related functions] functions after classdefs are now supported in Octave, see https://savannah.gnu.org/bugs/?41723. There is little difference (in my view) between private static class methods and class-related functions
+
 
