@@ -124,6 +124,10 @@ for k = 1:numIntervals
     end
 end
 
+%disp("in constructor funs")
+%iscell(funs)
+%disp(funs)
+
 end
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%  SPLITTING ON %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
