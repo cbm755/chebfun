@@ -40,3 +40,12 @@
 %! f = chebfun('sin(cos(2*x + 2))', [0 pi]);
 %! area = integral(f);
 %! assert (area, 0, -2*eps)
+
+%!test
+%! x = chebfun('x');
+%! f = x*2;
+
+%!xtest
+%! % premult by a constant fails
+%! x = chebfun('x');
+%! f = 2*x;
