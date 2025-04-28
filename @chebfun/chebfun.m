@@ -136,7 +136,7 @@ classdef chebfun
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% CLASS PROPERTIES:
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    properties (Access = public)
+    properties (Access = private)
         % DOMAIN of definition of a CHEBFUN object. If K = length(F.DOMAIN) is
         % greater than 1 then the CHEBFUN is referred to as a "piecewise".
         % CHEBFUN. The first and last values of this vector define the left and
@@ -144,8 +144,9 @@ classdef chebfun
         % locations of the interior breakpoints that define the domains of the
         % individual FUN objects comprising the CHEBFUN. The entries in this
         % vector should be strictly increasing.
-        domain              % (1x(K+1) double)
-
+        mydomain              % (1x(K+1) double)
+    end
+    properties (Access = public)
         % FUNS is a cell array containing the FUN objects that comprise a
         % piecewise CHEBFUN. The kth entry in this cell is the FUN defining
         % the representation used by the CHEBFUN object on the open interval
@@ -200,7 +201,7 @@ classdef chebfun
             end
                        
             % Parse inputs:
-            [op, dom, data, pref, flags] = parseInputs(varargin{:});
+            [op, dom, data, pref, flags] = chebfun.parseInputs(varargin{:});
                         
             if ( flags.done )
                 % An update was performed. Exit gracefully:
@@ -216,14 +217,14 @@ classdef chebfun
                 % Construct from function_handle, numeric, or string input:
                 
                 % Call the main constructor:
-                [f.funs, f.domain] = chebfun.constructor(op, dom, data, pref);
+                [f.funs, f.mydomain] = chebfun.constructor(op, dom, data, pref);
                 
                 if ( flags.doubleLength )
                     % Using the length of f.funs{1} is okay because the
                     % 'doubleLength' flag is mutually exclusive with 'splitting
                     % on'.
                     pref.techPrefs.fixedLength = 2*length(f.funs{1}) - 1;
-                    [f.funs, f.domain] = chebfun.constructor(op, dom, data, pref);
+                    [f.funs, f.mydomain] = chebfun.constructor(op, dom, data, pref);
                 end
 
                 % Update values at breakpoints (first row of f.pointValues):
@@ -442,14 +443,14 @@ classdef chebfun
         % Parse inputs to PLOT. Extract 'lineWidth', etc.
         [lineStyle, pointStyle, jumpStyle, deltaStyle, out] = ...
             parsePlotStyle(varargin)
-    end
 
-end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Class-related functions: private utilities for this m-file.
+%% Note: temporarily (?) made private static methods for Octave
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 function op = str2op(op)
     % Convert string inputs to either numeric format or function_handles.
     sop = str2num(op); %#ok<ST2NM> % STR2DOUBLE doesn't support str2double('pi')
@@ -779,10 +780,10 @@ function [op, dom, data, pref, flags] = parseInputs(op, varargin)
     function op = parseOp(op)
         % Convert string input to function_handle:
         if ( ischar(op) )
-            op = str2op(op);
+            op = chebfun.str2op(op);
         end
         if ( doVectorCheck && isa(op, 'function_handle') )
-            op = vectorCheck(op, dom, vectorize);
+            op = chebfun.vectorCheck(op, dom, vectorize);
         end
         if ( isa(op, 'chebfun') )
             if ( op.isTransposed )
@@ -944,7 +945,6 @@ catch ME
     
 end
 
-end
 
 function g = vec(op, y)
 %VEC  Vectorize a function or string expression.
@@ -983,4 +983,11 @@ function g = vec(op, y)
         end
     end
 
+end
+
+end
+
+
+
+    end  % methods
 end

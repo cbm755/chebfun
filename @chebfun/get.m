@@ -100,14 +100,6 @@ switch prop
         out = hscale(f);
     case 'ishappy'
         out = ishappy(f);
-    case fieldnames(f)
-        out = cell(1, numel(f));
-        for k = 1:1:numel(f)
-            out{k} = f(k).(prop);
-        end
-        if ( numel(out) == 1 )
-            out = out{1};
-        end
     case 'lval'
         dom = domain(f);
         out = feval(f, dom(1));
@@ -167,6 +159,14 @@ switch prop
         warning('CHEBFUN:CHEBFUN:get:imps', ...
             '''imps'' property is deprecated.  Use ''deltas'' instead.');
         out = get(f, 'deltas');
+    case fieldnames(f)
+        out = cell(1, numel(f));
+        for k = 1:1:numel(f)
+            out{k} = f(k).(prop);
+        end
+        if ( numel(out) == 1 )
+            out = out{1};
+        end
     otherwise
         error('CHEBFUN:CHEBFUN:get:badProp', ...
             '''%s'' is not a recognized CHEBFUN property name.', prop);

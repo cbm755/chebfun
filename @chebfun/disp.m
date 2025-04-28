@@ -7,7 +7,16 @@ function disp(f)
 % See http://www.chebfun.org/ for Chebfun information.
 
 % If the 'format loose' setting is enabled, we print additional linebreaks:
-loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+if (exist('OCTAVE_VERSION', 'builtin') )
+    if (compare_versions(OCTAVE_VERSION(), '4.3.0', '>='))
+        [fmt, spacing] = format();
+        loose = strcmp(spacing, 'loose');
+    else
+        loose = eval('! __compactformat__ ()');
+    end
+else
+    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+end
 
 s = '';
 
@@ -70,9 +79,10 @@ end
 s = [s, sprintf('\n       interval       length     endpoint values %s\n', extraItem)];
 len = zeros(numFuns, 1);
 for j = 1:numFuns
-    len(j) = length(f.funs{j});
+    ffuns = f.funs;
+    len(j) = length(ffuns{j});
 
-    if ( ~isreal(f.funs{j}) )
+    if ( ~isreal(ffuns{j}) )
         % For complex-valued funs, we don't display the values.
 
         % Print information to screen:
@@ -82,7 +92,7 @@ for j = 1:numFuns
     else
 
         % Grab values at endpoints:
-        endvals = [get(f.funs{j}, 'lval'), get(f.funs{j}, 'rval')];
+        endvals = [get(ffuns{j}, 'lval'), get(ffuns{j}, 'rval')];
 
         % Tweak the endpoint values: (This prevents -0 and +0)
         if ( ~any(isnan(endvals)) )
@@ -90,8 +100,9 @@ for j = 1:numFuns
         end
 
         % Print information to screen:
+        temp = f.domain;   % TODO: improve chaining in subsref?
         s = [s, sprintf('[%8.2g,%8.2g]   %6i  %8.2g %8.2g %s\n', ...
-            f.domain(j), f.domain(j+1), len(j), endvals, extraData{j})];
+            temp(j), temp(j+1), len(j), endvals, extraData{j})];
 
     end
 end

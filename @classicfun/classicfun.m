@@ -92,7 +92,7 @@ classdef classicfun < fun % (Abstract)
                 pref = chebfunpref(pref);
             end
 
-            data = parseDataInputs(data, pref);
+            data = classicfun.parseDataInputs(data, pref);
 
             % Call constructor depending on domain:
             if ( ~any(isinf(data.domain)) )
@@ -164,11 +164,17 @@ classdef classicfun < fun % (Abstract)
         end
 
     end
-end
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% METHODS IMPLEMENTED IN THIS FILE:
+%% Class-related functions: private utilities for this m-file.
+%% Note: temporarily (?) made private static methods for Octave
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% PRIVATE STATIC METHODS:
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    methods ( Access = private, Static = true )
 
 function data = parseDataInputs(data, pref)
 %PARSEDATAINPUTS   Parse inputs from the DATA structure and assign defaults.
@@ -177,4 +183,8 @@ if ( ~isfield(data, 'domain') || isempty(data.domain) )
     data.domain = pref.domain;
 end
 
+end
+
+
+    end  % methods
 end
