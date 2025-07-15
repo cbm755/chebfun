@@ -137,6 +137,10 @@ classdef chebfun
     %% CLASS PROPERTIES:
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     properties (Access = private)
+        m_domain
+    end
+
+    properties (Access = public)
         % DOMAIN of definition of a CHEBFUN object. If K = length(F.DOMAIN) is
         % greater than 1 then the CHEBFUN is referred to as a "piecewise".
         % CHEBFUN. The first and last values of this vector define the left and
@@ -144,9 +148,8 @@ classdef chebfun
         % locations of the interior breakpoints that define the domains of the
         % individual FUN objects comprising the CHEBFUN. The entries in this
         % vector should be strictly increasing.
-        mydomain              % (1x(K+1) double)
-    end
-    properties (Access = public)
+        domain              % (1x(K+1) double)
+
         % FUNS is a cell array containing the FUN objects that comprise a
         % piecewise CHEBFUN. The kth entry in this cell is the FUN defining
         % the representation used by the CHEBFUN object on the open interval
@@ -217,14 +220,14 @@ classdef chebfun
                 % Construct from function_handle, numeric, or string input:
                 
                 % Call the main constructor:
-                [f.funs, f.mydomain] = chebfun.constructor(op, dom, data, pref);
+                [f.funs, f.domain] = chebfun.constructor(op, dom, data, pref);
                 
                 if ( flags.doubleLength )
                     % Using the length of f.funs{1} is okay because the
                     % 'doubleLength' flag is mutually exclusive with 'splitting
                     % on'.
                     pref.techPrefs.fixedLength = 2*length(f.funs{1}) - 1;
-                    [f.funs, f.mydomain] = chebfun.constructor(op, dom, data, pref);
+                    [f.funs, f.domain] = chebfun.constructor(op, dom, data, pref);
                 end
 
                 % Update values at breakpoints (first row of f.pointValues):
@@ -334,6 +337,15 @@ classdef chebfun
     methods ( Access = private, Static = false )
         % Set small breakpoint values to zero.
         f = thresholdBreakpointValues(f);
+
+        function dom = get.domain(f)
+            dom = f.m_domain;
+        end
+
+        function f = set.domain(f, val)
+            f.m_domain = val;
+        end
+
     end
     
     
