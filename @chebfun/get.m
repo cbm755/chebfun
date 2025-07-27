@@ -92,8 +92,6 @@ if ( nargin < 3 )
 end
 
 switch prop
-    case {'domain'}
-        out = f.m_domain;
     case {'domain', 'ends'}
         out = domain(f);
     case 'vscale'
