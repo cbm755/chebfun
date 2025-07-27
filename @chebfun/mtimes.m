@@ -88,9 +88,7 @@ elseif ( fIsChebfun && isnumeric(g) )       % CHEBFUN * double
 
 elseif ( isnumeric(f) && gIsChebfun )       % double * CHEBFUN
 
-        %f = mtimes(g.', f.').';
-        % Transposing g and f here is what causes 2*f to fail and f*2 to work.
-        f = mtimes(g, f).';
+        f = mtimes(g.', f.').';
 
 elseif ( fIsChebfun )                       % CHEBFUN * ??? 
 
