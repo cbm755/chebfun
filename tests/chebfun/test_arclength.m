@@ -27,7 +27,7 @@ pass(2) = ( err < tol );
 
 
 % A piecewise smooth CHEBFUN:
-f = chebfun({@(x)sin(x) @(x)cos(2*x)}, [-1 1 2]);
+f = chebfun({@(x)sin(x), @(x)cos(2*x)}, [-1 1 2]);
 l = arcLength(f);
 % The exact result is obtained using method 'integral' of Matlab:
 lExact = 4.044985856867475; 
