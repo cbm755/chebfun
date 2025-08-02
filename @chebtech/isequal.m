@@ -6,6 +6,13 @@ function out = isequal(f, g)
 % Copyright 2017 by The University of Oxford and The Chebfun Developers. 
 % See http://www.chebfun.org/ for Chebfun information.
 
+% OCTAVE: temporary workaround for lack of InferiorClasses support
+if ( isa(g, 'singfun') )
+    out = isequal(g, f);
+    return
+end
+
+
 out = all(size(f.coeffs) == size(g.coeffs))  ...
     && all(f.coeffs(:) == g.coeffs(:));
 
