@@ -1,4 +1,4 @@
-classdef fun % (Abstract)
+classdef (Abstract) fun % (Abstract)
 %FUN   Approximate functions on arbitrary domains.
 %   Abstract (interface) class for approximating functions on the arbitrary
 %   intervals.
