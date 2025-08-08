@@ -303,7 +303,7 @@ end
 %% Plotting starts here:
 
 % Acquire initial color cycle if running R2014b+.
-if ( ~verLessThan('matlab', '8.4') )
+if ( ~compatible_verLessThan('matlab', '8.4') )
     if ( ~holdState )
         set(gca, 'ColorOrderIndex', 1);
     end
@@ -318,7 +318,7 @@ set(h1, 'Marker', 'none', lineStyle{:})
 hold on
 
 % Get color cycle prior to point plot if running R2014b.
-if ( ~verLessThan('matlab', '8.4') )
+if ( ~compatible_verLessThan('matlab', '8.4') )
     newColorOrder = get(gca, 'ColorOrderIndex');
     set(gca, 'ColorOrderIndex', originalColorOrder)
 end
@@ -333,7 +333,7 @@ if ( intervalIsSet )
 end
 
 % Reset color cycle prior to jump plot if running R2014b.
-if ( ~verLessThan('matlab', '8.4') )
+if ( ~compatible_verLessThan('matlab', '8.4') )
     set(gca, 'ColorOrderIndex', originalColorOrder);
 end
 
@@ -366,7 +366,7 @@ if ( ~isempty(deltaStyle) )
 end    
 
 % Reset colors prior to legend data plot if running R2014b.
-if ( ~verLessThan('matlab', '8.4') )
+if ( ~compatible_verLessThan('matlab', '8.4') )
     set(gca, 'ColorOrderIndex', originalColorOrder);
 end
 
@@ -387,7 +387,7 @@ if ( ~isempty(lineStyle) || ~isempty(pointStyle) )
 end
 
 % Reset colors prior to legend data plot if running R2014b.
-if ( ~verLessThan('matlab', '8.4') )
+if ( ~compatible_verLessThan('matlab', '8.4') )
     set(gca, 'ColorOrderIndex', newColorOrder);
 end
 
@@ -446,14 +446,14 @@ function h = plotDeltas(deltaData)
     h = [];
 
     % Get and save the current ColorOrder if running on R2014a or earlier.
-    if ( verLessThan('matlab', '8.4') )
+    if ( compatible_verLessThan('matlab', '8.4') )
         originalColorOrder = get(gca, 'ColorOrder');
         colorOrder = circshift(originalColorOrder, 1);
     end
 
     for k = 1:1:numel(deltaData)
         % Set color for the next delta function plot.
-        if ( verLessThan('matlab', '8.4') )
+        if ( compatible_verLessThan('matlab', '8.4') )
             % Manually manipulate the ColorOrder for R2014a or earlier.
             colorOrder = circshift(colorOrder, -1);
             set(gca, 'ColorOrder', colorOrder);
@@ -466,7 +466,7 @@ function h = plotDeltas(deltaData)
     end
 
     % Restore the ColorOrder if running on R2014a or earlier.
-    if ( verLessThan('matlab', '8.4') )
+    if ( compatible_verLessThan('matlab', '8.4') )
         set(gca, 'ColorOrder', originalColorOrder);
     end
 end
