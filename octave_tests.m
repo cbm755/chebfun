@@ -45,7 +45,7 @@
 %! x = chebfun('x');
 %! f = x*2;
 
-%!xtest
+%!test
 %! % premult by a constant fails
 %! x = chebfun('x');
 %! f = 2*x;
