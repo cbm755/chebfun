@@ -18,8 +18,7 @@ exps = zeros(numFuns, 2);
 
 % Loop over each FUN:
 for j = 1:numFuns
-    temp = f.funs;
-    infoJ = dispData(temp{j});
+    infoJ = dispData(f.funs{j});
     if ( ~isempty(infoJ) )
         numInfo = numel(infoJ);
         for k = 1:numInfo
