@@ -1,8 +1,10 @@
 function pass = test_bvp4c(pref)
 
-% OCTAVE: skip these tests for now; no bvpinit in Octave yet?
-pass(1) = true;
-return
+if is_octave()
+  disp('Skipping these tests on Octave: no bvpinit yet?')
+  pass(1) = true;
+  return
+end
 
 if ( nargin == 0 )
     pref = chebfunpref();
