@@ -103,7 +103,6 @@ elseif ( nargin == 2 )
         % Get the data from the FUN objects:
         dataNew = plotData(f.funs{k}, g.funs{k});
 
-        class(dataNew)
         if ( ~any(ismember(fieldnames(dataNew), 'xDeltas' )) )
             dataNew.xDeltas = [];
             dataNew.yDeltas = [];
