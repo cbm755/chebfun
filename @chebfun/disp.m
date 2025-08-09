@@ -7,7 +7,16 @@ function disp(f)
 % See http://www.chebfun.org/ for Chebfun information.
 
 % If the 'format loose' setting is enabled, we print additional linebreaks:
-loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+if (exist('OCTAVE_VERSION', 'builtin') )
+    if (compare_versions(OCTAVE_VERSION(), '4.3.0', '>='))
+        [fmt, spacing] = format();
+        loose = strcmp(spacing, 'loose');
+    else
+        loose = eval('! __compactformat__ ()');
+    end
+else
+    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+end
 
 s = '';
 
@@ -90,8 +99,9 @@ for j = 1:numFuns
         end
 
         % Print information to screen:
+        temp = f.domain;   % TODO: improve chaining in subsref?
         s = [s, sprintf('[%8.2g,%8.2g]   %6i  %8.2g %8.2g %s\n', ...
-            f.domain(j), f.domain(j+1), len(j), endvals, extraData{j})];
+            temp(j), temp(j+1), len(j), endvals, extraData{j})];
 
     end
 end

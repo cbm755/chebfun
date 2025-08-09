@@ -37,7 +37,7 @@ if ( nargin == 1 )
         % Get the data from the FUN:
         dataNew = plotData(f.funs{k});
 
-        if ( ~any(ismember(fields(dataNew), 'xDeltas' )) )
+        if ( ~any(ismember(fieldnames(dataNew), 'xDeltas' )) )
             dataNew.xDeltas = NaN;
             dataNew.yDeltas = NaN;
             dataNew.yDeltaBase = NaN;
@@ -103,7 +103,8 @@ elseif ( nargin == 2 )
         % Get the data from the FUN objects:
         dataNew = plotData(f.funs{k}, g.funs{k});
 
-        if ( ~any(ismember(fields(dataNew), 'xDeltas' )) )
+        class(dataNew)
+        if ( ~any(ismember(fieldnames(dataNew), 'xDeltas' )) )
             dataNew.xDeltas = [];
             dataNew.yDeltas = [];
             dataNew.yDeltaBase = [];
@@ -163,7 +164,7 @@ else
         % Get the data from the FUN objects:
         dataNew = plotData(f.funs{k}, g.funs{k}, h.funs{k});
 
-        if ( ~any(ismember(fields(dataNew), 'xDeltas' )) )
+        if ( ~any(ismember(fieldnames(dataNew), 'xDeltas' )) )
             dataNew.xDeltas = [];
             dataNew.yDeltas = [];
         end
