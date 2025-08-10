@@ -7,13 +7,9 @@ function disp(f)
 % See http://www.chebfun.org/ for Chebfun information.
 
 % If the 'format loose' setting is enabled, we print additional linebreaks:
-if (exist('OCTAVE_VERSION', 'builtin') )
-    if (compare_versions(OCTAVE_VERSION(), '4.3.0', '>='))
-        [fmt, spacing] = format();
-        loose = strcmp(spacing, 'loose');
-    else
-        loose = eval('! __compactformat__ ()');
-    end
+if is_octave()
+    [fmt, spacing] = format();
+    loose = strcmp(spacing, 'loose');
 else
     loose = strcmp(get(0, 'FormatSpacing'), 'loose');
 end

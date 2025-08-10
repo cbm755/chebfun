@@ -13,18 +13,14 @@ function display(X)
 % Copyright 2017 by The University of Oxford and The Chebfun Developers. 
 % See http://www.chebfun.org/ for Chebfun information.
 
-if (exist('OCTAVE_VERSION', 'builtin') )
-    if (compare_versions(OCTAVE_VERSION(), '4.3.0', '>='))
-        [fmt, spacing] = format();
-        loose = strcmp(spacing, 'loose');
-    else
-        loose = eval('! __compactformat__ ()');
-    end
+if is_octave()
+    [fmt, spacing] = format();
+    compact = strcmp(spacing, 'compact');
 else
-    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+    compact = strcmp(get(0, 'FormatSpacing'), 'compact');
 end
 
-if ( ~ loose )
+if ( compact )
     disp([inputname(1), ' =']);
     disp(X);
 else
