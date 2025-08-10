@@ -8,12 +8,15 @@ a = -2.25*pi;
 b = 2.25*pi;
 
 %% Scalar-valued, tan(f, g):
-%x = chebfun(@(x) x, [a, b], pref);
-%f = .5+sin(x).*exp(-.1*x.^2);
-f = chebfun('.5+sin(x).*exp(-.1*x.^2)', [a, b]);
-
-%g = cos(x).*(1+x.^2);
-g = chebfun('cos(x).*(1+x.^2)', [a, b]);
+x = chebfun(@(x) x, [a, b], pref);
+f = .5+sin(x).*exp(-.1*x.^2);
+g = cos(x).*(1+x.^2);
+% Octave workaround: OctIssue #8: query real first
+real(f);
+imag(f);
+real(g);
+imag(g);
+% end Octave workaround
 h = atan2(f, g);
 tol = 10*eps;
 
