@@ -1,0 +1,14 @@
+Name: chebfun
+Version: 5.7.0+
+Date: 2025-08-09
+Author: The Chebfun Developers
+Maintainer: Colin B. Macdonald <cbm@m.fsf.org>
+Title: Chebfun: numerical computing with functions
+Description: Chebfun is an open-source package for computing with functions
+ to about 15-digit accuracy.  Most Chebfun commands are overloads of
+ familiar Octave/MATLAB commands — for example sum(f) computes an
+ integral, roots(f) finds zeros, and u = L\f solves a differential equation.
+Categories: ApproximationTheory
+Url: https://github.com/cbm755/chebfun
+Depends: octave (>= 11.0)
+License: BSD-3-Clause
