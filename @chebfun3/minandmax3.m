@@ -70,7 +70,7 @@ lb = [dom(1); dom(3); dom(5)];
 ub = [dom(2); dom(4); dom(6)];
 
 if ( ~isempty(ver('optim')) )
-% Matlab's Optimization Toolbox is available. So, use fmincon command.
+    disp('Matlab''s Optimization Toolbox is available. So, use fmincon command.')
     options = optimset('Display', 'none', 'TolFun', eps, 'TolX', eps, ...
         'algorithm', 'active-set');
     [minLoc, vals(1)] = fmincon(@(x) feval(f, x(1), x(2), x(3)), ...
@@ -84,8 +84,7 @@ if ( ~isempty(ver('optim')) )
     locs = loc;
 else
     try
-        % Use core Matlab fminsearch command by converting to an 
-        % unconstrained optimization problem.
+        disp('Use core Matlab fminsearch command by converting to an unconstrained optimization problem')
         % Maps from [-1, 1] to dom(1:2), dom(3:4), and dom(5:6) 
         % respectively.
         map1 = bndfun.createMap(dom(1:2));
@@ -121,6 +120,7 @@ else
     catch
         % Nothing is going to work. So we will have to go with initial 
         % guesses.
+        disp('unconstrained opt failed: TODO: more info would be good?')
     end
 end
     
