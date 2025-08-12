@@ -53,9 +53,9 @@ else
                 [normF, idx] = max(abs(vals));
                 normloc = locs(idx, :);
             else
-                [vals, locs] = minandmax3(conj(f).*f);
-                [normF, idx] = max(sqrt(abs(vals)));
-                normloc = locs(idx, :);                
+                [vals, locs] = minandmax3(conj(f).*f)
+                [normF, idx] = max(sqrt(abs(vals)))
+                normloc = locs(idx, :)
             end
             
         case {-inf, '-inf', 'min'}

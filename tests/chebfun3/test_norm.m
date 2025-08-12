@@ -21,7 +21,7 @@ abs(norm(f, 4) - exact)
 pass(3) = abs(norm(f, 4) - exact) < tol;
 
 %% Complex-valued function:
-f = chebfun3(@(x,y,z) 1i*x);
+f = chebfun3(@(x,y,z) 1i*x)
 exact = 2*sqrt(2/3);      % sqrt(sum3(x.^2))
 abs(norm(f) - exact)
 pass(4) = abs(norm(f) - exact) < tol;
