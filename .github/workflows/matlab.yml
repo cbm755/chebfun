@@ -2,7 +2,7 @@ name: chebfun Tests
 on: [push]
 jobs:
   chebtest-matlab-R2023b:
-    name: Run chebfun tests
+    name: Chebtest Matlab R2023b
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -17,7 +17,7 @@ jobs:
           command: addpath('.'); results = chebtest; assert(all([results{:,3}] > 0))
 
   chebtest-matlab-R2024b:
-    name: Run chebfun tests
+    name: Chebtest Matlab R2024b
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -32,7 +32,7 @@ jobs:
           command: addpath('.'); results = chebtest; assert(all([results{:,3}] > 0))
 
   chebtest-matlab-latest:
-    name: Run chebfun tests
+    name: Chebtest Matlab latest
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
