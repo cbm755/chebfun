@@ -35,6 +35,8 @@ e = diag(D);
 err(5) = norm(e - e_true, inf);
 err(6) = norm(L*V-V*D);
 %%
+err
+tol
 pass = err < tol;
 
 end
