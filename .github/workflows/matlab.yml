@@ -11,6 +11,7 @@ jobs:
         uses: matlab-actions/setup-matlab@v2
         with:
           release: R2021a
+          products: Optimization_Toolbox
       - name: Run commands
         uses: matlab-actions/run-command@v2
         with:
@@ -26,6 +27,7 @@ jobs:
         uses: matlab-actions/setup-matlab@v2
         with:
           release: R2023b
+          products: Optimization_Toolbox
       - name: Run commands
         uses: matlab-actions/run-command@v2
         with:
@@ -34,6 +36,23 @@ jobs:
   r2024b-matlab-chebtest:
     name: R2024b Matlab chebtest
     runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install MATLAB
+        uses: matlab-actions/setup-matlab@v2
+        with:
+          release: R2024b
+          products: Optimization_Toolbox
+      - name: Run commands
+        uses: matlab-actions/run-command@v2
+        with:
+          command: addpath('.'); results = chebtest; assert(all([results{:,3}] > 0))
+
+  r2024b-matlab-chebtest-notoolbox:
+    name: R2024b Matlab no toolbox
+    runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -61,7 +80,7 @@ jobs:
         with:
           command: addpath('.'); system('cat /proc/cpuinfo'); format short g; cd('tests/linop'); test_eigsRayleigh(), cd('../misc'); test_gpr(), cd('../chebfun3'); test_norm(), cd('../spherefun'); test_optimization()
 
-  chebtest-matlab-latest:
+  latest-matlab-chebtest:
     name: latest Matlab chebtest
     runs-on: ubuntu-latest
     steps:
@@ -71,6 +90,7 @@ jobs:
         uses: matlab-actions/setup-matlab@v2
         with:
           release: latest
+          products: Optimization_Toolbox
       - name: Run commands
         uses: matlab-actions/run-command@v2
         with:
