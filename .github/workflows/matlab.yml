@@ -59,7 +59,7 @@ jobs:
       - name: Run commands
         uses: matlab-actions/run-command@v2
         with:
-          command: addpath('.'); system('cat /proc/cpuinfo'); format short g; cd('tests/linop'); test_eigsRayleigh(), cd('../misc'); test_gpr()
+          command: addpath('.'); system('cat /proc/cpuinfo'); format short g; cd('tests/linop'); test_eigsRayleigh(), cd('../misc'); test_gpr(), cd('../chebfun3'); test_norm(), cd('../spherefun'); test_optimization()
 
   chebtest-matlab-latest:
     name: latest Matlab chebtest
