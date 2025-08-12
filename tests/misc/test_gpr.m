@@ -58,7 +58,8 @@ pass(9) = err < 1e-10;
 
 
 f = gpr(xx,yy);
-err = norm((f(xx) - yy)./yy,Inf);
+numel(f)
+err = norm((f(xx) - yy)./yy,Inf)
 pass(10) = err < 1e-10;
 
 
