@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: FSFAP
+# Copyright 2025 The Chebfun Developers
+# See http://www.chebfun.org/ for Chebfun information.
+#
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
+
+name: Octave packaging
+
+on:
+  push:
+  pull_request:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  octave-pkg:
+    name: Octave package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Assemble Octave pkg
+        run: |
+          uname -a
+          pwd
+          cd octave_pkg
+          ./make_oct_pkg.sh
+          ls
+          md5sum chebfun-*.tar.gz
+
+      - name: Container setup
+        run: |
+          uname -a
+          docker pull docker.io/gnuoctave/octave:10.2.0
+          docker run --name=oc --detach --init \
+            --volume=$PWD:/workdir/chebfun:rw \
+            gnuoctave/octave:10.2.0 sleep inf
+          # FIXME: workaround "fatal: unsafe repository" error
+          # For more details, see https://stackoverflow.com/q/71901632
+          # and https://github.com/actions/checkout/issues/760
+          docker exec oc git config --global --add safe.directory /workdir/chebfun
+          # docker exec oc octave-cli --eval "pkg install struct optim"
+
+      - name: Try to install the package (should fail as we need Octave >= 11)
+        run: docker exec oc octave-cli --eval "cd chebfun/octave_pkg; pkg install chebfun-*.tar.gz"
+
+      - name: Stop container
+        run: |
+          docker stop oc
+          docker rm oc
