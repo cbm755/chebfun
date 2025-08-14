@@ -27,7 +27,12 @@ end
 % Display one ballfun function 
 function display_ballfun(f)
 
-loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+if is_octave()
+    [fmt, spacing] = format();
+    loose = strcmp(spacing, 'loose');
+else
+    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+end
 
 if isempty(f)
     fprintf('    empty ballfun\n')    

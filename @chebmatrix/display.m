@@ -11,7 +11,14 @@ function display(X)
 
 name = inputname(1);
 
-if ( isequal(get(0, 'FormatSpacing'), 'compact') )
+if is_octave()
+    [fmt, spacing] = format();
+    compact = strcmp(spacing, 'compact');
+else
+    compact = strcmp(get(0, 'FormatSpacing'), 'compact');
+end
+
+if ( compact )
 	disp([name, ' =']);
 	disp(X, name);
 else
