@@ -49,3 +49,23 @@
 %! % premult by a constant fails
 %! x = chebfun('x');
 %! f = 2*x;
+
+%!xtest
+%! % upstream copy-on-write bug causes uminus to mutate input
+%! % https://github.com/cbm755/chebfun/issues/13
+%! % https://savannah.gnu.org/bugs/index.php?54028
+%! x = chebfun('x');
+%! g = 2 + x;
+%! A = -g;
+%! assert (A(-1) < 0)
+%! % but g should NOT be changed
+%! assert (g(-1) > 0)
+%! assert (g(-0.99) > 0)
+%! assert (g(0.99) > 0)
+%! assert (g(1) > 0)
+%! A = -g;
+%! assert (A(-1) < 0)
+%! assert (g(-1) > 0)
+%! assert (g(-0.99) > 0)
+%! assert (g(0.99) > 0)
+%! assert (g(1) > 0)
