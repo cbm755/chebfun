@@ -1,4 +1,4 @@
-classdef (InferiorClasses = {?double}) chebop
+classdef chebop
 %CHEBOP  CHEBOP class for representing operators on functions defined on [a,b].
 %
 % N = CHEBOP(OP) creates a CHEBOP object N with operator defined by OP, which
