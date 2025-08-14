@@ -4,7 +4,12 @@ function disp(f)
 % Copyright 2019 by The University of Oxford and The Chebfun Developers.
 % See http://www.chebfun.org/ for Chebfun information.
 
-loose = strcmp(get(0,'FormatSpacing'),'loose');
+if is_octave()
+    [fmt, spacing] = format();
+    loose = strcmp(spacing, 'loose');
+else
+    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+end
 
 % Compact version:
 if ( isempty(f) )
