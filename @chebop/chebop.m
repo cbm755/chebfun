@@ -291,7 +291,8 @@ classdef chebop
             p = cheboppref();
             
             % Should anonymous functions automatically be vectorized?
-            N.vectorize = p.vectorize;
+            % N.vectorize = p.vectorize;
+            N.vectorize = false;
             
             if ( nargin == 0 )
                 return
