@@ -4,6 +4,12 @@ function pass = test_mult_op
 
 % TAD, 3 Feb 2014
 
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
+end
+
+
 tol = 1e-14;
 
 d = [0,2];

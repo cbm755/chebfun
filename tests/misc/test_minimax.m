@@ -2,6 +2,11 @@
 
 function pass = test_minimax( pref )
 
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
+end
+
 % Generate a few random points to use as test values.
 seedRNG(6178);
 xx = 2 * rand(100, 1) - 1;
