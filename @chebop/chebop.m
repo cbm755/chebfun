@@ -289,11 +289,15 @@ classdef chebop
             
             % Get current CHEBOPPREF settings
             p = cheboppref();
-            
+
             % Should anonymous functions automatically be vectorized?
-            % N.vectorize = p.vectorize;
-            N.vectorize = false;
-            
+            if (is_octave)
+                % Temporarily always disable vectorize on Octave
+                N.vectorize = false;
+            else
+                N.vectorize = p.vectorize;
+            end
+
             if ( nargin == 0 )
                 return
             end
