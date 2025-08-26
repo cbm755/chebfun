@@ -1,8 +1,7 @@
 function pass = test_bvp5c(pref)
 
 if is_octave()
-  disp('Skipping these tests on Octave: no bvpinit yet?')
-  pass(1) = true;
+  error('Skipping these tests on Octave: no bvpinit yet?')
   return
 end
 

@@ -1,6 +1,11 @@
 function pass = test_roots_syntax( pref ) 
 % Check the syntax to chebfun2/roots.
 
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
+end
+
 if ( nargin < 1 ) 
     pref = chebfunpref; 
 end
