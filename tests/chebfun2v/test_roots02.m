@@ -2,6 +2,11 @@ function pass = test_roots02( pref )
 % Check that the marching squares and Bezoutian agree with each other. 
 % Uncomment tests if harder tests should be executed.
 
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
+end
+
 if ( nargin < 1 ) 
     pref = chebfunpref; 
 end 

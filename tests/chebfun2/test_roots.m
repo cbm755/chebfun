@@ -1,6 +1,11 @@
 function pass = test_roots( )
 % Test the chebfun2/roots command.
 
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
+end
+
 tol = 1e-12;  % rank 1 curves
 tol2 = 1e-8;  % rank >1 curves, disjoint
 tol3 = 1e-4;  % rank >1 curves, noncircular

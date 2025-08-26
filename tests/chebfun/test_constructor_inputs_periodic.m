@@ -1,5 +1,10 @@
 function pass = test_constructor_inputs_periodic(pref)
 
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
+end
+
 if ( nargin == 0 )
     pref = chebfunpref();
 end

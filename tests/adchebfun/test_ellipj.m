@@ -2,6 +2,12 @@
 
 function pass = test_ellipj
 
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
+end
+
+
 % List of airy functions to test, with different inputs
 ellipj075 = @(f) ellipj(f, 0.75);
 ellipj1 = @(f) ellipj(f, 1);

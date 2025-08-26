@@ -1,10 +1,9 @@
 function pass = test_changeTech(pref)
 % Test CHEBFUN/CHANGETECH.
 
-if is_octave()
-  disp('Skipping these tests on Octave: need inferior class support(?)')
-  pass(1) = true;
-  return
+if (is_octave)
+    error("Disabling test on Octave, crashes the interpreter");
+    return
 end
 
 if ( nargin == 0 )
