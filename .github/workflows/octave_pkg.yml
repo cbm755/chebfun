@@ -48,12 +48,11 @@ jobs:
       - name: Try to install the package (should fail as we need Octave >= 11)
         run: docker exec oc octave-cli --eval "cd chebfun/octave_pkg; try, pkg install chebfun-*.tar.gz, exit(1), catch err, disp(err.message), end"
 
-      # TODO: hardcoded version name here :(
       - name: Keep built package as artifact
         uses: actions/upload-artifact@v4
         with:
           name: octave-dev-package
-          path: chebfun/octave_pkg/chebfun-4.7.0+.tar.gz
+          path: chebfun/octave_pkg/chebfun-*.tar.gz
 
       - name: Stop container
         run: |
