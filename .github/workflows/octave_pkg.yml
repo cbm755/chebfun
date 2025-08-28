@@ -31,6 +31,7 @@ jobs:
           ./make_oct_pkg.sh
           ls
           md5sum chebfun-*.tar.gz
+          sha256sum chebfun-*.tar.gz
 
       - name: Container setup
         run: |
@@ -48,11 +49,12 @@ jobs:
       - name: Try to install the package (should fail as we need Octave >= 11)
         run: docker exec oc octave-cli --eval "cd chebfun/octave_pkg; try, pkg install chebfun-*.tar.gz, exit(1), catch err, disp(err.message), end"
 
+      # TODO: hardcoded version name here :(
       - name: Keep built package as artifact
         uses: actions/upload-artifact@v4
         with:
           name: octave-dev-package
-          path: chebfun/octave_pkg/chebfun-*.tar.gz
+          path: octave_pkg/chebfun-5.7.0+.tar.gz
 
       - name: Stop container
         run: |
