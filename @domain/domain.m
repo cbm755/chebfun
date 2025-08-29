@@ -28,6 +28,8 @@ classdef (InferiorClasses = {?chebfun}) domain
         function obj = domain(varargin)
             %Constructor for the DOMAIN class.
 
+            % TODO: Change made for Octave?  Colin did this a long time ago
+            % TODO: should add a note explaining why
             if ((nargin == 1) && isa (varargin{1}, 'domain'))
                 obj = varargin{1};
                 return
