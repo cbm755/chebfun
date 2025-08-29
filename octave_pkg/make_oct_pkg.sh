@@ -6,12 +6,13 @@
 A=chebfun-5.7.0+
 
 rm -rf $A
+rm -f $A.tar.gz
 mkdir $A
 cp NEWS DESCRIPTION $A
 cp ../LICENSE.txt $A/COPYING
 pushd $A
 mkdir inst
-cp -ra ../../ inst/
+cp -ra ../../* inst/
 rm -rf inst/.git
 rm -rf inst/.github
 popd
