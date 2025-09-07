@@ -197,6 +197,11 @@ end
 % Solve:
 if ( all(isLinear) )
     % This step also ensures that RHS is a CHEBMATRIX:
+    if is_octave()
+        % TODO: probably hitting Octave COW issues, why else would this fix
+        % anything?  But it fixes "L \ 1" for CBM...  see also uminus hacks
+        _tmp = (-1)*residual;
+    end
     rhs = rhs - residual;
     
     % Ensure that rhs-residual is of correct discretization:
