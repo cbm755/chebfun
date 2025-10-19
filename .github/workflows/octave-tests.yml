@@ -1,8 +1,6 @@
 name: Chebfun Tests on Octave
 
-on:
-  push:
-    branches: [ "octave_dev" ]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   test-octave:
