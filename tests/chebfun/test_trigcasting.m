@@ -1,10 +1,5 @@
 function pass = test_trigcasting(pref)
 
-if ( is_octave )
-    pass(1) = false
-    return
-end
-
 % Get preferences:
 if ( nargin < 1 )
     pref = chebfunpref();
