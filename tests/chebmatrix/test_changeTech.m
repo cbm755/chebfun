@@ -1,11 +1,6 @@
 function pass = test_changeTech(pref)
 % Test CHEBMATRIX/CHANGETECH.
 
-if (is_octave)
-    error("Disabling test on Octave, crashes the interpreter");
-    return
-end
-
 if ( nargin == 0 )
     pref = chebfunpref();
 end

@@ -1,10 +1,5 @@
 function pass = test_truncate(pref)
 
-if (is_octave)
-    error("Disabling test on Octave, crashes the interpreter");
-    return
-end
-
 if ( nargin == 0 )
     pref = chebfunpref();
 end
