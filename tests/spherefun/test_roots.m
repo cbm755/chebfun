@@ -1,11 +1,6 @@
 function pass = test_roots( pref ) 
 % Check that roots works for a spherefun.
 
-if (is_octave)
-    error("Disabling test on Octave, crashes the interpreter");
-    return
-end
-
 if ( nargin < 1 ) 
     pref = chebfunpref; 
 end
