@@ -7,14 +7,6 @@ function F = uminus(F)
 % Copyright 2017 by The University of Oxford and The Chebfun Developers.
 % See http://www.chebfun.org/ for Chebfun information.
 
-if is_octave()
-    % implementation below hits a COW bug in upstream octave
-    % https://github.com/cbm755/chebfun/issues/13
-    % https://savannah.gnu.org/bugs/index.php?54028
-    F = -1*F;
-    return
-end
-
 % Handle the empty case:
 if ( isempty(F) )
     return
