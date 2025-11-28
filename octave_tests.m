@@ -50,9 +50,8 @@
 %! x = chebfun('x');
 %! f = 2*x;
 
-%!test
+%!xtest
 %! % upstream copy-on-write bug causes uminus to mutate input
-%! % see workaround in @chebfun/uminus.m
 %! % https://github.com/cbm755/chebfun/issues/13
 %! % https://savannah.gnu.org/bugs/index.php?54028
 %! x = chebfun('x');
