@@ -6,13 +6,13 @@ jobs:
   test-octave:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/kolmanthomas/chebfun:octave-latest
+      image: ghcr.io/kolmanthomas/octave:classdef
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Run Chebfun tests
-        run: octave --eval "addpath(genpath(pwd)); chebtest('ballfun', 'ballfunv', 'bndfun', 'classicfun', 'chebfun', 'chebfun2', 'chebfun3', 'chebgui', 'chebmatrix', 'chebpref', 'deltafun', 'diskfun', 'diskfunv', 'fun', 'functionalBlock', 'misc', 'operatorBlock', 'singfun', 'spherefun', 'spherefunv', 'spinop', 'spinop2', 'spinop3', 'spinopsphere', 'spinpref', 'spinpref2', 'spinpref3', 'spinprefsphere', 'spinscheme', 'treeVar', 'trigspec', 'trigtech', 'unbndfun', '--log')"
+        run: octave --eval "addpath(genpath(pwd)); chebtest('--log')"
 
       - name: Upload log file
         uses: actions/upload-artifact@v4
