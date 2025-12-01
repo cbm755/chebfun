@@ -259,7 +259,7 @@ for k = 1:length(x)
             % INTEGRAL is not available in versions of MATLAB prior to R2012a,
             % so if we're running on an older version, fall back to QUADGK.
             integrand = @(t) feval(f, t).*feval(g, x(k) - t);
-            if ( verLessThan('matlab', '7.14') )
+            if ( ~is_octave() && verLessThan('matlab', '7.14') )
                 out(k) = out(k) + quadgk(integrand, dom(j), dom(j+1), ...
                     'AbsTol', 1e-15, 'RelTol', 100*eps);
             else

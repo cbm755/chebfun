@@ -29,7 +29,7 @@ else
 end
 
 % Adjust for MATLAB version if out = -1:
-if ( (out == -1 ) && verLessThan('matlab', '9.1') )
+if ( (out == -1 ) && ~is_octave() && verLessThan('matlab', '9.1') )
    out = 0; 
 end
 
