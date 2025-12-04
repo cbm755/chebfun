@@ -11,6 +11,12 @@ b = 2.25*pi;
 x = chebfun(@(x) x, [a, b], pref);
 f = .5+sin(x).*exp(-.1*x.^2);
 g = cos(x).*(1+x.^2);
+% Octave workaround: OctIssue #8: query real first
+real(f);
+imag(f);
+real(g);
+imag(g);
+% end Octave workaround
 h = atan2(f, g);
 tol = 10*eps;
 

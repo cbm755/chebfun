@@ -10,7 +10,12 @@ function disp(L)
 [m, n] = size(L);
 
 % Determine whether format is compact or loose:
-loose = ~isequal(get(0, 'FormatSpacing'), 'compact');
+if is_octave()
+    [fmt, spacing] = format();
+    loose = strcmp(spacing, 'loose');
+else
+    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+end
 
 if ( loose )
     fprintf('\n');

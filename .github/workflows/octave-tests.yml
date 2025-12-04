@@ -1,0 +1,25 @@
+name: Chebfun Tests on Octave
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test-octave:
+    runs-on: ubuntu-latest
+    container:
+      # Container is built from the "classdef" branch of the 
+      # github.com/kolmanthomas/octave repo
+      image: ghcr.io/kolmanthomas/octave:classdef
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Chebfun tests
+        run: octave --eval "addpath(genpath(pwd)); chebtest('--log')"
+
+      - name: Upload log file
+        uses: actions/upload-artifact@v4
+        with:
+          name: chebtest-log
+          path: ./*.log
+          retention-days: 30
+

@@ -9,7 +9,12 @@ function disp(L, name)
 [m, n] = size(L);
 c = blockClasses(L);
 
-loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+if is_octave()
+    [fmt, spacing] = format();
+    loose = strcmp(spacing, 'loose');
+else
+    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+end
 
 fprintf('   %i x %i chebmatrix of block types:\n', m, n)
 

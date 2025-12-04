@@ -6,7 +6,12 @@ function display(N)
 % Copyright 2017 by The University of Oxford and The Chebfun Developers.
 % See http://www.chebfun.org/ for Chebfun information.
 
-loose = ~isequal(get(0, 'FormatSpacing'), 'compact');
+if is_octave()
+    [fmt, spacing] = format();
+    loose = strcmp(spacing, 'loose');
+else
+    loose = strcmp(get(0, 'FormatSpacing'), 'loose');
+end
 
 if ( loose ) 
     fprintf('\n') 

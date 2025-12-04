@@ -1,4 +1,4 @@
-classdef (InferiorClasses = {?double}) chebop
+classdef chebop
 %CHEBOP  CHEBOP class for representing operators on functions defined on [a,b].
 %
 % N = CHEBOP(OP) creates a CHEBOP object N with operator defined by OP, which
@@ -289,10 +289,15 @@ classdef (InferiorClasses = {?double}) chebop
             
             % Get current CHEBOPPREF settings
             p = cheboppref();
-            
+
             % Should anonymous functions automatically be vectorized?
-            N.vectorize = p.vectorize;
-            
+            if (is_octave)
+                % Temporarily always disable vectorize on Octave
+                N.vectorize = false;
+            else
+                N.vectorize = p.vectorize;
+            end
+
             if ( nargin == 0 )
                 return
             end
