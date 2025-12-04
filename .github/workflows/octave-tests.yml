@@ -6,6 +6,8 @@ jobs:
   test-octave:
     runs-on: ubuntu-latest
     container:
+      # Container is built from the "classdef" branch of the 
+      # github.com/kolmanthomas/octave repo
       image: ghcr.io/kolmanthomas/octave:classdef
 
     steps:
